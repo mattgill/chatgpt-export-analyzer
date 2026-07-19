@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { chromium } from '@playwright/test'
@@ -32,7 +32,10 @@ async function main() {
     await waitForServer('http://127.0.0.1:4173/chatgpt-export-analytics-tool/')
     browser = await chromium.launch(); const page = await browser.newPage(); const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message)); await page.goto('http://127.0.0.1:4173/chatgpt-export-analytics-tool/#/')
     await page.getByLabel('Select ChatGPT export ZIP').setInputFiles(uploadPath); await page.waitForURL(/#\/report$/, { timeout: 15 * 60_000 })
-    const metric = { status: 'completed', source: zipPath ? 'private' : 'synthetic', compressedBytes: archive.byteLength, expandedConversationBytes: expandedBytes, conversations, elapsedMs: Math.round(performance.now() - started), pageErrors: errors.length }
+    const downloadStarted = performance.now(); const downloadPromise = page.waitForEvent('download'); await page.getByRole('button', { name: 'Download Markdown ZIP' }).click(); const download = await downloadPromise; const downloadPath = await download.path()
+    if (!downloadPath) throw new Error('Markdown download did not produce a local file.')
+    const archiveBytes = (await stat(downloadPath)).size
+    const metric = { status: 'completed', source: zipPath ? 'private' : 'synthetic', compressedBytes: archive.byteLength, expandedConversationBytes: expandedBytes, conversations, elapsedMs: Math.round(performance.now() - started), markdownDownloadCompleted: true, markdownArchiveBytes: archiveBytes, markdownExportElapsedMs: Math.round(performance.now() - downloadStarted), pageErrors: errors.length }
     console.log(JSON.stringify(metric))
   } finally { await browser?.close(); server.kill(); if (temporaryDirectory) await rm(temporaryDirectory, { recursive: true, force: true }) }
 }

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UploadDropzone } from '../components/UploadDropzone'
 import { useExportAnalysis } from '../hooks/useExportAnalysis'
+import { useExportSession } from '../export/ExportSession'
 import { reportRepository } from '../storage/reportRepository'
 
 export function UploadPage() {
-  const { analyze, cancel, state } = useExportAnalysis(); const [hasReport, setHasReport] = useState(false)
+  const session = useExportSession(); const { analyze, cancel, state } = useExportAnalysis(session); const [hasReport, setHasReport] = useState(false)
   useEffect(() => { void reportRepository.loadLatest().then((result) => setHasReport(Boolean(result.snapshot))) }, [])
-  const clear = async () => { await reportRepository.clear(); setHasReport(false) }
+  const clear = async () => { await reportRepository.clear(); session.clearSource(); setHasReport(false) }
   const percentage = state.total ? Math.min(100, Math.round(state.completed / state.total * 100)) : 0
   return <main className="page upload-page"><p className="eyebrow">Private analytics</p><h1>Understand your ChatGPT export.</h1><p className="lead">Your export is processed only in this browser. It is never uploaded to an application server.</p>
     <UploadDropzone disabled={state.active} onFile={analyze} />
