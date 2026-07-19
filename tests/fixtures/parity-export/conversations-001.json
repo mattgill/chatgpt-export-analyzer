@@ -1,0 +1,13 @@
+[
+  {"id": "alpha", "title": "Duplicate", "mapping": {}},
+  {
+    "conversation_id": "beta",
+    "title": "February multimodal",
+    "update_time": "2024-02-03T12:00:00Z",
+    "mapping": {
+      "u2": {"message": {"author": {"role": "user"}, "create_time": "2024-02-03T10:00:00Z", "content": {"content_type": "multimodal_text", "parts": ["Describe this image"]}}},
+      "a2": {"message": {"author": {"role": "assistant"}, "create_time": 1706954700, "content": {"content_type": "text", "text": "A bright blue square."}}},
+      "invalid": {"message": {"author": {"role": "assistant"}, "content": {"content_type": "audio", "parts": ["ignore"]}}}
+    }
+  }
+]
