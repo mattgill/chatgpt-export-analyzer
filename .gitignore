@@ -5,3 +5,4 @@ node_modules/
 dist/
 test-results/
 scripts/conversations-to-markdown.mjs
+.work-notes/
