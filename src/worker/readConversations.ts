@@ -52,7 +52,7 @@ export async function readConversations(file: Blob & { name?: string }, options:
           if (expanded > MAX_EXPANDED) fail('decompressed_limit')
           if (!failure) { try { tokenizer.write(chunk) } catch { fail('malformed_json') } }
         }
-        if (final && !ended) { ended = true; if (!failure) { try { tokenizer.end(); if (!tokenParser.isEnded) tokenParser.end() } catch { fail('malformed_json') } }; resolve() }
+        if ((final || failure) && !ended) { ended = true; if (!failure) { try { tokenizer.end(); if (!tokenParser.isEnded) tokenParser.end() } catch { fail('malformed_json') } }; resolve() }
       }
       entry.start()
     })

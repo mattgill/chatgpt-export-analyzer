@@ -24,7 +24,13 @@ export function useExportAnalysis(session: ExportAnalysisSession) {
       const message = event.data
       if (message.type === 'progress') setState({ phase: message.phase, completed: message.completed, total: message.total, error: null, active: true })
       if (message.type === 'error') { next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: message.message, active: false }) }
-      if (message.type === 'complete') void reportRepository.replaceLatest(message.snapshot).then(() => { session.setSourceFile(file); next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: null, active: false }); navigate('/report') }, () => { next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: 'The report could not be saved in this browser.', active: false }) })
+      if (message.type === 'complete') void reportRepository.replaceLatest(message.snapshot).then(() => {
+        if (currentRun !== run.current) return
+        session.setSourceFile(file); next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: null, active: false }); navigate('/report')
+      }, () => {
+        if (currentRun !== run.current) return
+        next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: 'The report could not be saved in this browser.', active: false })
+      })
     }
     next.onerror = () => { if (currentRun === run.current) { next.terminate(); worker.current = null; setState({ phase: null, completed: 0, error: 'Analysis could not be completed.', active: false }) } }
     next.postMessage({ type: 'analyze', file })
