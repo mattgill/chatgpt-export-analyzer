@@ -1,0 +1,26 @@
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Chart } from '../components/report/Chart'
+import { ConversationTable } from '../components/report/ConversationTable'
+import { ReasoningScenario } from '../components/report/ReasoningScenario'
+import { reportRepository } from '../storage/reportRepository'
+import type { AnalysisSnapshot } from '../analysis/types'
+
+const compact = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 })
+export function ReportPage() {
+  const navigate = useNavigate(); const [snapshot, setSnapshot] = useState<AnalysisSnapshot | null>(null); const [status, setStatus] = useState<'loading' | 'empty' | 'error' | 'ready'>('loading')
+  useEffect(() => { void reportRepository.loadLatest().then(({ snapshot: saved, recovered }) => { if (recovered) setStatus('error'); else if (!saved) setStatus('empty'); else { setSnapshot(saved); setStatus('ready') } }, () => setStatus('error')) }, [])
+  const clear = async () => { await reportRepository.clear(); navigate('/') }
+  if (status === 'loading') return <main className="page"><p>Loading your local report…</p></main>
+  if (status === 'empty') return <main className="page"><h1>No local report yet</h1><p>Analyze a ZIP to create a browser-only report.</p><Link to="/">Analyze an export</Link></main>
+  if (status === 'error' || !snapshot) return <main className="page"><h1>That local report could not be opened</h1><p>It was removed because it is incomplete or from an incompatible version.</p><Link to="/">Analyze an export</Link></main>
+  const { totals, inventory, summaryByModel, monthly, daily, conversationHistogram, metrics, topConversations } = snapshot
+  return <main className="page report-page"><header className="report-header"><div><p className="eyebrow">Local report</p><h1>ChatGPT export analytics</h1><p>Derived locally from {snapshot.source.name}. Conversation text is not retained.</p></div><div><Link to="/">Analyze another export</Link><button type="button" onClick={() => void clear()}>Clear local report</button></div></header>
+    <section className="cards"><article><span>Conversations</span><strong>{compact.format(totals.conversations)}</strong></article><article><span>Total tokens</span><strong>{compact.format(totals.totalTokens)}</strong></article><article><span>Prompts</span><strong>{compact.format(totals.prompts)}</strong></article><article><span>Primary estimate</span><strong>${(summaryByModel[0]?.estimatedCost ?? 0).toFixed(2)}</strong></article></section>
+    <section className="inventory"><h2>Export content inventory</h2><dl><div><dt>API-equivalent tokens</dt><dd>{inventory.apiTotalTokens.toLocaleString()}</dd></div><div><dt>Reasoning recap nodes</dt><dd>{inventory.recapNodes.toLocaleString()} ({inventory.recapTokens.toLocaleString()} tokens)</dd></div><div><dt>Internal artifact nodes</dt><dd>{inventory.internalArtifactNodes.toLocaleString()}</dd></div></dl></section>
+    <section className="chart-grid"><Chart title="Cost by model" data={[{ type: 'bar', x: summaryByModel.map((row) => row.model), y: summaryByModel.map((row) => row.estimatedCost), marker: { color: '#265dc8' } }]} /><Chart title="Monthly estimated spend" data={[{ type: 'bar', x: monthly.map((row) => row.month), y: monthly.map((row) => row.estimatedCost), marker: { color: '#49a078' } }]} /><Chart title="Monthly input and output tokens" data={[{ type: 'bar', name: 'Input', x: monthly.map((row) => row.month), y: monthly.map((row) => row.inputTokens) }, { type: 'bar', name: 'Output', x: monthly.map((row) => row.month), y: monthly.map((row) => row.outputTokens) }]} layout={{ barmode: 'group' }} /><Chart title="Cumulative tokens" data={[{ type: 'scatter', mode: 'lines', x: daily.map((row) => row.day), y: daily.map((row) => row.cumulativeTokens), line: { color: '#265dc8' } }]} /><Chart title="Cumulative estimated spend" data={[{ type: 'scatter', mode: 'lines', x: daily.map((row) => row.day), y: daily.map((row) => row.cumulativeEstimatedCost), line: { color: '#49a078' } }]} /><Chart title="Conversation size distribution" data={[{ type: 'bar', x: conversationHistogram.map((row) => `${Math.round(row.lowerBound)}–${Math.round(row.upperBound)}`), y: conversationHistogram.map((row) => row.conversations), marker: { color: '#8b6ad6' } }]} /><Chart title="Monthly activity heatmap" data={[{ type: 'heatmap', x: daily.map((row) => row.day), y: ['Tokens'], z: [daily.map((row) => row.totalTokens)], colorscale: 'Blues' }]} /></section>
+    <section className="insights"><h2>Additional insights</h2><dl><div><dt>Average conversation</dt><dd>{metrics.averageConversationTokens.toFixed(0)} tokens</dd></div><div><dt>Median conversation</dt><dd>{metrics.medianConversationTokens.toFixed(0)} tokens</dd></div><div><dt>Longest conversation</dt><dd>{metrics.longestConversationTitle}</dd></div><div><dt>Longest prompt/reply</dt><dd>{metrics.longestPromptCharacters.toLocaleString()} / {metrics.longestReplyCharacters.toLocaleString()} characters</dd></div></dl><h3>Top 10 days</h3><ol>{metrics.topDays.map((day) => <li key={day.day}>{day.day}: {day.totalTokens.toLocaleString()} tokens</li>)}</ol></section>
+    <ConversationTable rows={topConversations} />
+    <ReasoningScenario inputTokens={totals.inputTokens} outputTokens={totals.outputTokens} />
+  </main>
+}

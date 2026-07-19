@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "analyzedAt": "2025-01-01T00:00:00.000Z",
+  "source": {"name": "parity.zip", "compressedBytes": 915, "conversationParts": 2},
+  "totals": {"conversations": 3, "prompts": 2, "assistantReplies": 2, "inputTokens": 7, "outputTokens": 12, "totalTokens": 19},
+  "inventory": {"apiInputTokens": 7, "apiOutputTokens": 12, "apiTotalTokens": 19, "recapNodes": 1, "recapTokens": 2, "internalArtifactNodes": 1},
+  "summaryByModel": [
+    {"model":"GPT-5.6 Sol","inputTokens":7,"outputTokens":12,"totalTokens":19,"estimatedCost":0.000395},
+    {"model":"GPT-5.6 Terra","inputTokens":7,"outputTokens":12,"totalTokens":19,"estimatedCost":0.0001975},
+    {"model":"GPT-5.6 Luna","inputTokens":7,"outputTokens":12,"totalTokens":19,"estimatedCost":0.000079},
+    {"model":"GPT-5.5","inputTokens":7,"outputTokens":12,"totalTokens":19,"estimatedCost":0.000395},
+    {"model":"GPT-5.4 Mini","inputTokens":7,"outputTokens":12,"totalTokens":19,"estimatedCost":0.00005925}
+  ],
+  "monthly": [
+    {"month":"2024-01","conversations":1,"prompts":1,"assistantReplies":1,"inputTokens":4,"outputTokens":7,"totalTokens":11,"estimatedCost":0.00023},
+    {"month":"2024-02","conversations":1,"prompts":1,"assistantReplies":1,"inputTokens":3,"outputTokens":5,"totalTokens":8,"estimatedCost":0.000165}
+  ],
+  "daily": [
+    {"day":"2024-01-01","prompts":1,"assistantReplies":1,"inputTokens":4,"outputTokens":7,"totalTokens":11,"estimatedCost":0.00023,"cumulativeTokens":11,"cumulativeEstimatedCost":0.00023},
+    {"day":"2024-02-03","prompts":1,"assistantReplies":1,"inputTokens":3,"outputTokens":5,"totalTokens":8,"estimatedCost":0.000165,"cumulativeTokens":19,"cumulativeEstimatedCost":0.000395}
+  ],
+  "conversationHistogram": [
+    {"lowerBound":0,"upperBound":0.36666666666666664,"conversations":1},
+    {"lowerBound":0.36666666666666664,"upperBound":0.7333333333333333,"conversations":0},
+    {"lowerBound":0.7333333333333333,"upperBound":1.0999999999999999,"conversations":0},
+    {"lowerBound":1.0999999999999999,"upperBound":1.4666666666666666,"conversations":0},
+    {"lowerBound":1.4666666666666666,"upperBound":1.8333333333333333,"conversations":0},
+    {"lowerBound":1.8333333333333333,"upperBound":2.1999999999999997,"conversations":0},
+    {"lowerBound":2.1999999999999997,"upperBound":2.5666666666666664,"conversations":0},
+    {"lowerBound":2.5666666666666664,"upperBound":2.933333333333333,"conversations":0},
+    {"lowerBound":2.933333333333333,"upperBound":3.3,"conversations":0},
+    {"lowerBound":3.3,"upperBound":3.6666666666666665,"conversations":0},
+    {"lowerBound":3.6666666666666665,"upperBound":4.033333333333333,"conversations":0},
+    {"lowerBound":4.033333333333333,"upperBound":4.3999999999999995,"conversations":0},
+    {"lowerBound":4.3999999999999995,"upperBound":4.766666666666667,"conversations":0},
+    {"lowerBound":4.766666666666667,"upperBound":5.133333333333333,"conversations":0},
+    {"lowerBound":5.133333333333333,"upperBound":5.5,"conversations":0},
+    {"lowerBound":5.5,"upperBound":5.866666666666666,"conversations":0},
+    {"lowerBound":5.866666666666666,"upperBound":6.2333333333333325,"conversations":0},
+    {"lowerBound":6.2333333333333325,"upperBound":6.6,"conversations":0},
+    {"lowerBound":6.6,"upperBound":6.966666666666666,"conversations":0},
+    {"lowerBound":6.966666666666666,"upperBound":7.333333333333333,"conversations":0},
+    {"lowerBound":7.333333333333333,"upperBound":7.699999999999999,"conversations":0},
+    {"lowerBound":7.699999999999999,"upperBound":8.066666666666666,"conversations":1},
+    {"lowerBound":8.066666666666666,"upperBound":8.433333333333334,"conversations":0},
+    {"lowerBound":8.433333333333334,"upperBound":8.799999999999999,"conversations":0},
+    {"lowerBound":8.799999999999999,"upperBound":9.166666666666666,"conversations":0},
+    {"lowerBound":9.166666666666666,"upperBound":9.533333333333333,"conversations":0},
+    {"lowerBound":9.533333333333333,"upperBound":9.899999999999999,"conversations":0},
+    {"lowerBound":9.899999999999999,"upperBound":10.266666666666666,"conversations":0},
+    {"lowerBound":10.266666666666666,"upperBound":10.633333333333333,"conversations":0},
+    {"lowerBound":10.633333333333333,"upperBound":11,"conversations":1}
+  ],
+  "metrics": {"averageConversationTokens":6.333333333333333,"medianConversationTokens":8,"longestConversationTitle":"January Unicode","longestPromptCharacters":19,"longestReplyCharacters":21,"topDays":[{"day":"2024-01-01","prompts":1,"assistantReplies":1,"inputTokens":4,"outputTokens":7,"totalTokens":11,"estimatedCost":0.00023,"cumulativeTokens":11,"cumulativeEstimatedCost":0.00023},{"day":"2024-02-03","prompts":1,"assistantReplies":1,"inputTokens":3,"outputTokens":5,"totalTokens":8,"estimatedCost":0.000165,"cumulativeTokens":19,"cumulativeEstimatedCost":0.000395}]},
+  "topConversations": [{"title":"January Unicode","firstMessageAt":"2024-01-01T00:00:00.000Z","lastMessageAt":"2024-01-01T00:02:00.000Z","userTurns":1,"assistantTurns":1,"inputTokens":4,"outputTokens":7,"totalTokens":11,"averageMessageTokens":5.5,"largestMessageTokens":7,"estimatedCost":0.00023,"costsByModel":{"GPT-5.6 Sol":0.00023,"GPT-5.6 Terra":0.000115,"GPT-5.6 Luna":0.000046,"GPT-5.5":0.00023,"GPT-5.4 Mini":0.0000345}},{"title":"February multimodal","firstMessageAt":"2024-02-03T10:00:00.000Z","lastMessageAt":"2024-02-03T10:05:00.000Z","userTurns":1,"assistantTurns":1,"inputTokens":3,"outputTokens":5,"totalTokens":8,"averageMessageTokens":4,"largestMessageTokens":5,"estimatedCost":0.000165,"costsByModel":{"GPT-5.6 Sol":0.000165,"GPT-5.6 Terra":0.0000825,"GPT-5.6 Luna":0.000033,"GPT-5.5":0.000165,"GPT-5.4 Mini":0.00002475}},{"title":"Empty","firstMessageAt":null,"lastMessageAt":null,"userTurns":0,"assistantTurns":0,"inputTokens":0,"outputTokens":0,"totalTokens":0,"averageMessageTokens":0,"largestMessageTokens":0,"estimatedCost":0,"costsByModel":{"GPT-5.6 Sol":0,"GPT-5.6 Terra":0,"GPT-5.6 Luna":0,"GPT-5.5":0,"GPT-5.4 Mini":0}}]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "alpha",
+    "title": "January Unicode",
+    "create_time": 1704067200,
+    "mapping": {
+      "u1": {"message": {"author": {"role": "user"}, "create_time": 1704067200, "content": {"content_type": "text", "parts": ["Hello 👋 café"]}}},
+      "a1": {"message": {"author": {"role": "assistant"}, "create_time": "2024-01-01T00:02:00Z", "metadata": {"model_slug": "gpt-test"}, "content": {"content_type": "text", "parts": ["Hi—how can I help?"]}}},
+      "recap": {"message": {"author": {"role": "assistant"}, "create_time": 1704067330, "content": {"content_type": "reasoning_recap", "content": "Short recap"}}},
+      "thought": {"message": {"author": {"role": "assistant"}, "content": {"content_type": "thoughts", "thoughts": [{"text": "not retained"}]}}}
+    }
+  },
+  {"id": "empty", "title": "Empty", "mapping": {"bad": {"message": null}}}
+]
