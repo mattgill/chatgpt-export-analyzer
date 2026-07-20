@@ -1,6 +1,8 @@
 import { Component, lazy, Suspense, type ReactNode } from 'react'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ExportSessionProvider } from './export/ExportSession'
+import { TopBar } from './components/TopBar'
+import { ThemeProvider } from './hooks/useTheme'
 import { UploadPage } from './pages/UploadPage'
 const ReportPage = lazy(() => import('./pages/ReportPage').then((module) => ({ default: module.ReportPage })))
 
@@ -15,9 +17,9 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 }
 
 export function App() {
-  return <ErrorBoundary><ExportSessionProvider><HashRouter><Routes>
+  return <ThemeProvider><ErrorBoundary><ExportSessionProvider><HashRouter><TopBar /><Routes>
     <Route path="/" element={<UploadPage />} />
     <Route path="/report" element={<Suspense fallback={<main className="page"><p>Loading your local report…</p></main>}><ReportPage /></Suspense>} />
     <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes></HashRouter></ExportSessionProvider></ErrorBoundary>
+  </Routes></HashRouter></ExportSessionProvider></ErrorBoundary></ThemeProvider>
 }
