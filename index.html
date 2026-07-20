@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; worker-src 'self' blob:; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; base-uri 'self'; object-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; worker-src 'self' blob:; script-src 'self' 'sha256-ehI4zbbjBv/z9FbbyoEhgdHvhJ41sFZZHNY+zMLtaeA=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; base-uri 'self'; object-src 'none'" />
     <meta name="description" content="Private, browser-only analytics for your ChatGPT export." />
     <title>ChatGPT Export Analytics</title>
+    <script>try { if (localStorage.getItem('chatgpt-export-analytics-theme') === 'dark') document.documentElement.classList.add('dark') } catch {}</script>
   </head>
   <body>
     <div id="root"></div>
